@@ -1,0 +1,24 @@
+from flask import Flask, request, jsonify
+import sqlite3
+
+app = Flask(__name__)
+
+# Database setup (SQLite in this example)
+db = sqlite3.connect('waste_management.db')
+cursor = db.cursor()
+cursor.execute('CREATE TABLE IF NOT EXISTS waste_bins (id INTEGER PRIMARY KEY, fill_level INTEGER)')
+db.commit()
+
+@app.route('/api/update-fill-level', methods=['POST'])
+def update_fill_level():
+    data = request.json
+    fill_level = data.get('fill_level')
+
+    # Store fill level in the database
+    cursor.execute('INSERT INTO waste_bins (fill_level) VALUES (?)', (fill_level,))
+    db.commit()
+
+    return jsonify({'message': 'Fill level updated successfully'})
+
+if __name__ == '__main__':
+    app.run(debug=True)
