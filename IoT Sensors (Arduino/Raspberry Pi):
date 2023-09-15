@@ -1,0 +1,48 @@
+lot sensors:
+#include <WiFi.h>
+
+const char* ssid = "YourSSID";
+const char* password = "YourPassword";
+const char* serverUrl = "http://yourserver.com/api/update-fill-level";
+
+void setup() {
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+  Serial.println("Connected to WiFi");
+
+  // Initialize ultrasonic sensor
+  // ...
+
+  // Set up other sensors and pins as needed
+  // ...
+}
+
+void loop() {
+  // Read fill level from sensors
+  int fillLevel = readFillLevel();
+
+  // Send data to the server
+  sendFillLevelToServer(fillLevel);
+
+  // Wait for some time before taking the next reading
+  delay(60000); // 1 minute
+}
+
+int readFillLevel() {
+  // Implement sensor reading logic here
+  // ...
+
+  return fillLevel;
+}
+
+void sendFillLevelToServer(int fillLevel) {
+  // Implement HTTP POST request to send data to the server
+  // ...
+
+  // Example using HTTPClient library
+  // ...
+}
